@@ -2,12 +2,13 @@ name: .NET Build and Test
 
 on:
   push:
-    branches: [ main ]
-  pull_request:
-    branches: [ feature/*, bugfix/*, bug/*, hotfix/*]
-
-
-
+    branches:
+     - main
+     - feature/*
+     - bugfix/* 
+     - bug/* 
+     - hotfix/*
+     
 defaults:
   run:
     working-directory: code
