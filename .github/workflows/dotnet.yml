@@ -6,6 +6,12 @@ on:
   pull_request:
     branches: [ feature/*, bugfix/*, bug/*, hotfix/*]
 
+
+
+defaults:
+  run:
+    working-directory: code
+
 jobs:
   build:
 
