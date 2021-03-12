@@ -13,6 +13,7 @@ namespace Atlas_API.Tests
         public void Test1()
         {
             Assert.Fail();
+
         }
     }
 }
