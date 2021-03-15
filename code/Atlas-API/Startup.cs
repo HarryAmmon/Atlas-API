@@ -14,6 +14,10 @@ using Microsoft.OpenApi.Models;
 using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
 using Azure.Core;
+using Atlas_API.Repositories;
+using Atlas_API.Services;
+using Atlas_API.Factories;
+using Atlas_API.Entities;
 
 namespace Atlas_API
 {
@@ -54,6 +58,10 @@ namespace Atlas_API
             };
 
             services.AddSingleton(new SecretClient(new Uri("https://ci601-atlas.vault.azure.net/"), new DefaultAzureCredential(), options));
+            services.AddSingleton<IAzureKeyVaultAccess, AzureKeyVaultAccess>();
+            services.AddSingleton<IMongoClientFactory, MongoClientFactory>();
+            services.AddScoped<ICollectionRetriever<UserStory>, UserStoryCollectionRetriever>();
+            services.AddScoped<IUserStoryRepository, UserStoryRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

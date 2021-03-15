@@ -21,7 +21,7 @@ namespace Atlas_API.Tests
             var result = new UserStory(id, "title");
 
             // Arrange
-            Assert.AreEqual(result.Id, id);
+            Assert.AreEqual(result.StoryId, id);
         }
 
         [Test]
@@ -58,7 +58,8 @@ namespace Atlas_API.Tests
         }
 
         [Test]
-        public void AcceptanceCriteria_Optional_Value_Is_WhiteSpace(){
+        public void AcceptanceCriteria_Optional_Value_Is_WhiteSpace()
+        {
             // Act
             var result = new UserStory("123", "title");
 
