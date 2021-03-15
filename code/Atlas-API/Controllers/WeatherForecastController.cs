@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Security.KeyVault.Secrets;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -17,15 +18,21 @@ namespace Atlas_API.Controllers
         };
 
         private readonly ILogger<WeatherForecastController> _logger;
-
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        private readonly SecretClient _client;
+        public WeatherForecastController(ILogger<WeatherForecastController> logger, SecretClient client)
         {
             _logger = logger;
+            _client = client;
+
         }
 
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {
+
+            KeyVaultSecret secret = _client.GetSecret("MyFirstSecret");
+            Console.WriteLine(secret.Value);
+
             var rng = new Random();
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
