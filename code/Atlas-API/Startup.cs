@@ -35,11 +35,25 @@ namespace Atlas_API
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Atlas_API", Version = "v1" });
             });
+
+            SecretClientOptions options = new SecretClientOptions()
+            {
+                Retry = {
+                    Delay = TimeSpan.FromSeconds(2),
+                    MaxDelay = TimeSpan.FromSeconds(16),
+                    MaxRetries = 5,
+                    Mode = RetryMode.Exponential
+                }
+            };
+
+            services.AddSingleton(new SecretClient(new Uri("https://ci601-atlas.vault.azure.net/"), new DefaultAzureCredential(), options));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -53,21 +67,6 @@ namespace Atlas_API
 
             app.UseAuthorization();
 
-
-            SecretClientOptions options = new SecretClientOptions()
-            {
-                Retry = {
-                    Delay = TimeSpan.FromSeconds(2),
-                    MaxDelay = TimeSpan.FromSeconds(16),
-                    MaxRetries = 5,
-                    Mode = RetryMode.Exponential
-                }
-            };
-
-            var client = new SecretClient(new Uri("https://ci601-atlas.vault.azure.net/"), new DefaultAzureCredential(), options);
-
-            KeyVaultSecret secret = client.GetSecret("MyFirstSecret");
-            Console.WriteLine(secret);
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
