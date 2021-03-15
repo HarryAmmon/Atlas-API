@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using Atlas_API.Services;
 using MongoDB.Driver;
+using System;
 
 namespace Atlas_API.Factories
 {
@@ -14,6 +15,11 @@ namespace Atlas_API.Factories
         public async Task<MongoClient> CreateClient()
         {
             var secrets = await _vaultAccess.GetSecrets("MongoDBConnectionString", "MongoDBUserName", "MongoDBPassword", "MongoDBName");
+            foreach (var secret in secrets)
+            {
+                Console.WriteLine(secret.Name);
+                Console.WriteLine(secret.Value);
+            }
 
             string connectionString = secrets[0].Value;
 

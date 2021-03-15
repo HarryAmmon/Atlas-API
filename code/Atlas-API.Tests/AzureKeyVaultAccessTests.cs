@@ -10,11 +10,11 @@ namespace Atlas_API.Tests
 {
     public class AzureKeyVaultAccessTests
     {
-        private SecretClient client;
+        private readonly SecretClient client;
 
-        private string key = "myFakeSecretKey";
+        private readonly string key = "myFakeSecretKey";
 
-        private string value = "myFakeSecretValue";
+        private readonly string value = "myFakeSecretValue";
 
         public AzureKeyVaultAccessTests()
         {
