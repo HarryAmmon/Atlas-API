@@ -1,6 +1,6 @@
 using System;
 
-namespace Atlas_API
+namespace Atlas_API.Entities
 {
     public class WeatherForecast
     {

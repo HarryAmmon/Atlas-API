@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Azure.Security.KeyVault.Secrets;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Atlas_API.Entities;
 
 namespace Atlas_API.Controllers
 {
