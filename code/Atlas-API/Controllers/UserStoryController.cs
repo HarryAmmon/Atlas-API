@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Atlas_API.Entities;
 using Atlas_API.Repositories;
 using Microsoft.AspNetCore.Mvc;
@@ -10,17 +11,17 @@ namespace Atlas_API.Controllers
     public class UserStoryController : ControllerBase
     {
 
-        private readonly IUserStoryRepository _repo;
+        private readonly IBaseRepository<UserStory> _repo;
 
-        public UserStoryController(IUserStoryRepository repo)
+        public UserStoryController(IBaseRepository<UserStory> repo)
         {
             _repo = repo;
         }
 
         [HttpGet]
-        public IEnumerable<UserStory> Get()
+        public async Task<IEnumerable<UserStory>> Get()
         {
-            return _repo.GetAll();
+            return await _repo.Get();
         }
     }
 }
