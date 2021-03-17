@@ -25,11 +25,17 @@ namespace Atlas_API.Entities
 
         public UserStory(string id, string title, double storyPoints = 0, string description = "", string acceptanceCriteria = "")
         {
+            Id = new ObjectId();
             StoryId = id;
             Title = title;
             StoryPoints = storyPoints;
             Description = description;
             AcceptanceCriteria = acceptanceCriteria;
+        }
+
+        public UserStory()
+        {
+
         }
     }
 }

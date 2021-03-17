@@ -5,23 +5,45 @@ using Azure.Security.KeyVault.Secrets;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using Atlas_API.Services;
+using System.Threading.Tasks;
 
 namespace Atlas_API.Repositories
 {
-    public class UserStoryRepository : IUserStoryRepository
+    public class UserStoryRepository : IBaseRepository<UserStory>
     {
-        private readonly ICollectionRetriever<UserStory> _collection;
-        public UserStoryRepository(ICollectionRetriever<UserStory> collection)
+        private readonly IMongoDBContext _context;
+        private readonly IMongoCollection<UserStory> _collection;
+        public UserStoryRepository(IMongoDBContext context)
         {
-            _collection = collection;
+            _context = context;
+            _collection = _context.GetCollection<UserStory>("Atlas");
         }
 
-        public IEnumerable<UserStory> GetAll()
+        public Task<UserStory> Create(UserStory obj)
         {
-            var collection = _collection.GetCollection("Atlas", "Atlas");
-            var allUsers = collection.Find(_ => true).ToList();
+            throw new NotImplementedException();
+        }
 
-            return allUsers;
+        public Task Delete(string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<IEnumerable<UserStory>> Get()
+        {
+            var allUserStories = await _collection.FindAsync(_ => true);
+            var allUserStoriesAsList = allUserStories.ToList();
+            return allUserStoriesAsList;
+        }
+
+        public Task<UserStory> Get(string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task Update(UserStory obj)
+        {
+            throw new NotImplementedException();
         }
     }
 }
