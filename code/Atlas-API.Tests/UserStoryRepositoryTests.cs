@@ -109,7 +109,7 @@ namespace Atlas_API.Tests
         }
 
         [Test]
-        public void Object_Id_Pid_Is_Not_Null_If_No_Value_Given()
+        public void Object_Id_Pid_Is_Null_If_No_Value_Given()
         {
             // Arrange
 
@@ -118,11 +118,11 @@ namespace Atlas_API.Tests
 
 
             // Assert
-            Assert.That(story.Id, Is.Not.Null);
+            Assert.That(story.Id, Is.Null);
         }
 
         [Test]
-        public void Object_Id_Has_A_Value_Of_Zero_If_No_Value_Provided()
+        public void Object_Id_Has_A_Value_Of_Null_If_No_Value_Provided()
         {
             // Arrange
 
@@ -130,7 +130,7 @@ namespace Atlas_API.Tests
             var story = new UserStory();
             Console.WriteLine(story.Id);
             // Assert
-            Assert.That(story.Id, Is.EqualTo(0));
+            Assert.That(story.Id, Is.Null);
         }
 
     }
