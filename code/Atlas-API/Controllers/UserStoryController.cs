@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Atlas_API.Entities;
@@ -22,6 +23,13 @@ namespace Atlas_API.Controllers
         public async Task<IEnumerable<UserStory>> Get()
         {
             return await _repo.Get();
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Post(UserStory userStory)
+        {
+            var result = await _repo.Create(userStory);
+            return CreatedAtAction("Post", result);
         }
     }
 }

@@ -58,13 +58,79 @@ namespace Atlas_API.Tests
 
             // Act
             var result = await repo.Get();
-            foreach (var story in result)
-            {
-                Console.WriteLine(story.Title);
-            }
 
             // Assert
             Assert.That(result, Has.Count.EqualTo(2));
+        }
+
+        [Test]
+        public async Task Creating_Valid_UserStoy_Returns_UserStory()
+        {
+            // Arrange
+            var story = new List<UserStory>()
+            {
+                new UserStory()
+                {
+                    Id = new ObjectId(),
+                    StoryId = "12",
+                    Title = "test title"
+                }
+            };
+
+            Mock<IAsyncCursor<UserStory>> _userStoryCursor = new Mock<IAsyncCursor<UserStory>>();
+            _userStoryCursor.Setup(_ => _.Current).Returns(story);
+            _userStoryCursor
+                .SetupSequence(_ => _.MoveNext(It.IsAny<CancellationToken>()))
+                .Returns(true)
+                .Returns(false);
+
+            _mockCollection = new Mock<IMongoCollection<UserStory>>();
+
+            _mockCollection
+                .Setup(x => x.InsertOneAsync(It.IsAny<UserStory>(), It.IsAny<InsertOneOptions>(), It.IsAny<CancellationToken>()));
+
+            _mockCollection
+                .Setup(x => x.FindAsync(It.IsAny<FilterDefinition<UserStory>>(), It.IsAny<FindOptions<UserStory, UserStory>>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(_userStoryCursor.Object);
+
+            _mockContext = new Mock<IMongoDBContext>();
+            _mockContext
+                .Setup(x => x.GetCollection<UserStory>(It.IsAny<string>()))
+                .Returns(_mockCollection.Object);
+
+            var repo = new UserStoryRepository(_mockContext.Object);
+
+            // Act
+            var result = await repo.Create(story[0]);
+
+            // Assert
+            Assert.That(result.StoryId, Is.EqualTo(story[0].StoryId));
+
+        }
+
+        [Test]
+        public void Object_Id_Pid_Is_Not_Null_If_No_Value_Given()
+        {
+            // Arrange
+
+            // Act
+            var story = new UserStory();
+
+
+            // Assert
+            Assert.That(story.Id, Is.Not.Null);
+        }
+
+        [Test]
+        public void Object_Id_Has_A_Value_Of_Zero_If_No_Value_Provided()
+        {
+            // Arrange
+
+            // Act
+            var story = new UserStory();
+            Console.WriteLine(story.Id);
+            // Assert
+            Assert.That(story.Id.Pid, Is.EqualTo(0));
         }
 
     }

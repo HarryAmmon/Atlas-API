@@ -19,9 +19,14 @@ namespace Atlas_API.Repositories
             _collection = _context.GetCollection<UserStory>("Atlas");
         }
 
-        public Task<UserStory> Create(UserStory obj)
+        public async Task<UserStory> Create(UserStory obj)
         {
-            throw new NotImplementedException();
+            await _collection.InsertOneAsync(obj);
+            var result = await _collection.FindAsync(x => x.Id == obj.Id);
+
+            Console.WriteLine(obj.ToString());
+
+            return result.First();
         }
 
         public Task Delete(string id)
@@ -33,6 +38,7 @@ namespace Atlas_API.Repositories
         {
             var allUserStories = await _collection.FindAsync(_ => true);
             var allUserStoriesAsList = allUserStories.ToList();
+
             return allUserStoriesAsList;
         }
 
