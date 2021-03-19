@@ -29,9 +29,11 @@ namespace Atlas_API.Repositories
             return result.First();
         }
 
-        public Task Delete(string id)
+        public async Task Delete(string id)
         {
-            throw new NotImplementedException();
+            var result = await Get(id);
+            result.Archived = true;
+            await Update(id, result);
         }
 
         public async Task<IEnumerable<UserStory>> Get()

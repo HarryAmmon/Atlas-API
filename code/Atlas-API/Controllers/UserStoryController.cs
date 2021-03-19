@@ -64,5 +64,21 @@ namespace Atlas_API.Controllers
                 return NotFound(ex.Message);
             }
         }
+
+        [HttpDelete("{id:length(24)}")]
+        public async Task<ActionResult> Delete(string id)
+        {
+            var story = await _repo.Get(id);
+            if (story == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                await _repo.Delete(id);
+                return StatusCode(202);
+            }
+
+        }
     }
 }
