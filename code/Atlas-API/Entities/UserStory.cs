@@ -29,6 +29,9 @@ namespace Atlas_API.Entities
         [BsonElement("AcceptanceCriteria")]
         public string AcceptanceCriteria { get; set; }
 
+        [BsonElement("Archived")]
+        public bool Archived { get; set; }
+
         public UserStory(string id, string title, double storyPoints = 0, string description = "", string acceptanceCriteria = "")
         {
             StoryId = id;
@@ -38,11 +41,11 @@ namespace Atlas_API.Entities
             AcceptanceCriteria = acceptanceCriteria;
         }
 
-        public UserStory() { }
+    public UserStory() { }
 
-        public override string ToString()
-        {
-            return $"{Id} {StoryId}, {Title}, {StoryPoints}, {Description}, {AcceptanceCriteria}";
-        }
+    public override string ToString()
+    {
+        return $"{Id} {StoryId}, {Title}, {StoryPoints}, {Description}, {AcceptanceCriteria}";
     }
+}
 }
