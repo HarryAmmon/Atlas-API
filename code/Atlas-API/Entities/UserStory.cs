@@ -8,7 +8,8 @@ namespace Atlas_API.Entities
     public class UserStory
     {
         [BsonElement("_id")]
-        public ObjectId Id { get; set; }
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string Id { get; set; }
 
         [BsonElement("StoryId")]
         [Required]
@@ -30,7 +31,6 @@ namespace Atlas_API.Entities
 
         public UserStory(string id, string title, double storyPoints = 0, string description = "", string acceptanceCriteria = "")
         {
-            Id = new ObjectId();
             StoryId = id;
             Title = title;
             StoryPoints = storyPoints;
