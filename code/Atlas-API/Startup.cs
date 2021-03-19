@@ -38,9 +38,10 @@ namespace Atlas_API
                 options.AddDefaultPolicy(
                     builder =>
                     {
-                        builder.WithOrigins("http://localhost:3000");
+                        builder.WithOrigins(new string[] { "http://localhost:3000", "https://localhost:3000" }).AllowAnyMethod().AllowAnyHeader();
                     });
             });
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
