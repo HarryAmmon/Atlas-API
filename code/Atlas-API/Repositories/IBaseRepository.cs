@@ -9,7 +9,7 @@ namespace Atlas_API.Repositories
         Task<T> Create(T obj);
         Task<T> Get(string id);
         Task<IEnumerable<T>> Get();
-        Task Update(T obj);
+        Task Update(string id, T obj);
         Task Delete(string id);
 
 

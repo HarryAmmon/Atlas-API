@@ -42,14 +42,25 @@ namespace Atlas_API.Repositories
             return allUserStoriesAsList;
         }
 
-        public Task<UserStory> Get(string id)
+        public async Task<UserStory> Get(string id)
         {
-            throw new NotImplementedException();
+            var result = await _collection.Find<UserStory>(story => story.Id == id).FirstOrDefaultAsync();
+            return result;
         }
 
-        public Task Update(UserStory obj)
+        public async Task Update(string id, UserStory obj)
         {
-            throw new NotImplementedException();
+            Console.WriteLine(obj.ToString());
+            var result = await _collection.ReplaceOneAsync(story => story.Id == id, obj);
+            if (result.ModifiedCount == 0)
+            {
+                Console.WriteLine("Throwing error");
+                throw new NullReferenceException("No documents updated");
+            }
+            else
+            {
+                Console.WriteLine("Updated");
+            }
         }
     }
 }
