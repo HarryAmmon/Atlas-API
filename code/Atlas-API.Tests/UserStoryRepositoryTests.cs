@@ -26,12 +26,12 @@ namespace Atlas_API.Tests
             {
                 new UserStory ()
                 {
-                    Id = new ObjectId(),
+                    Id = "jkhsdfghjk",
                     Title = "My title1",
                 },
                 new UserStory()
                 {
-                    Id = new ObjectId(),
+                    Id = "asdsadsdq",
                     Title = "My title2",
                 }
             };
@@ -71,7 +71,7 @@ namespace Atlas_API.Tests
             {
                 new UserStory()
                 {
-                    Id = new ObjectId(),
+                    Id = "jnkasdhjkasdh",
                     StoryId = "12",
                     Title = "test title"
                 }
@@ -130,7 +130,7 @@ namespace Atlas_API.Tests
             var story = new UserStory();
             Console.WriteLine(story.Id);
             // Assert
-            Assert.That(story.Id.Pid, Is.EqualTo(0));
+            Assert.That(story.Id, Is.EqualTo(0));
         }
 
     }
