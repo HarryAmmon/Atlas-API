@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
@@ -9,12 +11,15 @@ namespace Atlas_API.Entities
         public ObjectId Id { get; set; }
 
         [BsonElement("StoryId")]
+        [Required]
         public string StoryId { get; set; }
 
         [BsonElement("Title")]
+        [Required]
         public string Title { get; set; }
 
         [BsonElement("StoryPoints")]
+        [Range(0, double.MaxValue)]
         public double StoryPoints { get; set; }
 
         [BsonElement("Description")]
@@ -33,9 +38,11 @@ namespace Atlas_API.Entities
             AcceptanceCriteria = acceptanceCriteria;
         }
 
-        public UserStory()
-        {
+        public UserStory() { }
 
+        public override string ToString()
+        {
+            return $"{Id} {StoryId}, {Title}, {StoryPoints}, {Description}, {AcceptanceCriteria}";
         }
     }
 }
