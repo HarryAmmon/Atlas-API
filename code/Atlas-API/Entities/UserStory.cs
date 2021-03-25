@@ -13,7 +13,7 @@ namespace Atlas_API.Entities
 
         [BsonElement("StoryId")]
         [Required]
-        public string StoryId { get; set; }
+        public string UserStoryId { get; set; }
 
         [BsonElement("Title")]
         [Required]
@@ -34,18 +34,18 @@ namespace Atlas_API.Entities
 
         public UserStory(string id, string title, double storyPoints = 0, string description = "", string acceptanceCriteria = "")
         {
-            StoryId = id;
+            UserStoryId = id;
             Title = title;
             StoryPoints = storyPoints;
             Description = description;
             AcceptanceCriteria = acceptanceCriteria;
         }
 
-    public UserStory() { }
+        public UserStory() { }
 
-    public override string ToString()
-    {
-        return $"{Id} {StoryId}, {Title}, {StoryPoints}, {Description}, {AcceptanceCriteria}";
+        public override string ToString()
+        {
+            return $"{Id} {UserStoryId}, {Title}, {StoryPoints}, {Description}, {AcceptanceCriteria}";
+        }
     }
-}
 }
