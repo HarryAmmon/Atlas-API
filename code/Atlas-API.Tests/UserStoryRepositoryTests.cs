@@ -72,7 +72,7 @@ namespace Atlas_API.Tests
                 new UserStory()
                 {
                     Id = "jnkasdhjkasdh",
-                    StoryId = "12",
+                    UserStoryId = "12",
                     Title = "test title"
                 }
             };
@@ -104,7 +104,7 @@ namespace Atlas_API.Tests
             var result = await repo.Create(story[0]);
 
             // Assert
-            Assert.That(result.StoryId, Is.EqualTo(story[0].StoryId));
+            Assert.That(result.UserStoryId, Is.EqualTo(story[0].UserStoryId));
 
         }
 

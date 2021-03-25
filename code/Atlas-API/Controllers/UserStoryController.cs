@@ -31,6 +31,7 @@ namespace Atlas_API.Controllers
         [HttpPost]
         public async Task<ActionResult> Post(UserStory userStory)
         {
+            Console.WriteLine("Post");
             var result = await _repo.Create(userStory);
             return CreatedAtAction("Post", result);
         }

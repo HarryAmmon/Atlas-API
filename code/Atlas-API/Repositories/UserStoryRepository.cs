@@ -16,7 +16,7 @@ namespace Atlas_API.Repositories
         public UserStoryRepository(IMongoDBContext context)
         {
             _context = context;
-            _collection = _context.GetCollection<UserStory>("Atlas");
+            _collection = _context.GetCollection<UserStory>("UserStories");
         }
 
         public async Task<UserStory> Create(UserStory obj)

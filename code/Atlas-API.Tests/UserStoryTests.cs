@@ -21,7 +21,7 @@ namespace Atlas_API.Tests
             var result = new UserStory(id, "title");
 
             // Arrange
-            Assert.AreEqual(result.StoryId, id);
+            Assert.AreEqual(result.UserStoryId, id);
         }
 
         [Test]
