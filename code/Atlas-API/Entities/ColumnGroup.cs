@@ -7,7 +7,6 @@ namespace Atlas_API.Entities
     public class ColumnGroup
     {
         [BsonElement("_id")]
-        [Required]
         public string GroupId { get; set; }
 
         [BsonElement("Title")]
@@ -16,10 +15,10 @@ namespace Atlas_API.Entities
 
         [BsonElement("Limits")]
         [Required]
+        [Range(0, int.MaxValue)]
         public int Limits { get; set; }
 
         [BsonElement("ExitCriteria")]
-        [Required]
         public string ExitCriteria { get; set; }
     }
 }
