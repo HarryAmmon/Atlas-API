@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
 using Atlas_API.Entities;
-using Azure.Security.KeyVault.Secrets;
-using MongoDB.Bson;
 using MongoDB.Driver;
 using Atlas_API.Services;
 using System.Threading.Tasks;

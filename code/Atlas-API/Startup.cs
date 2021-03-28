@@ -63,6 +63,7 @@ namespace Atlas_API
             services.AddSingleton<IMongoClientFactory, MongoClientFactory>();
             services.AddScoped<IMongoDBContext, MongoDBContext>();
             services.AddScoped<IBaseRepository<UserStory>, UserStoryRepository>();
+            services.AddScoped<IBaseRepository<ColumnGroup>, ColumnGroupRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -7,7 +7,7 @@ namespace Atlas_API.Entities
     public class ColumnGroup
     {
         [BsonElement("_id")]
-        [BsonRepresentation(BsonType.ObjectId)]
+        [Required]
         public string GroupId { get; set; }
 
         [BsonElement("Title")]
