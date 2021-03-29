@@ -9,6 +9,7 @@ namespace Atlas_API.Entities
     {
         [BsonElement("_id")]
         [BsonRepresentation(BsonType.ObjectId)]
+        [BsonId]
         public string Id { get; set; }
 
         [BsonElement("StoryId")]
