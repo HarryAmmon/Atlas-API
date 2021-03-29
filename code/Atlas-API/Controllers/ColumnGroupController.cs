@@ -27,9 +27,7 @@ namespace Atlas_API.Controllers
         [HttpPost]
         public async Task<ActionResult> Post(ColumnGroup group)
         {
-            Console.WriteLine($"request body: {group.ToString()}");
             var result = await _repo.Create(group);
-            Console.WriteLine($"result: {result.ToString()}");
             return CreatedAtAction("Post", result);
         }
     }

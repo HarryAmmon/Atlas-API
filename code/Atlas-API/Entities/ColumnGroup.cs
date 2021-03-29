@@ -7,6 +7,8 @@ namespace Atlas_API.Entities
     public class ColumnGroup
     {
         [BsonElement("_id")]
+        [BsonRepresentation(BsonType.ObjectId)]
+        [BsonId]
         public string GroupId { get; set; }
 
         [BsonElement("Title")]
@@ -20,5 +22,10 @@ namespace Atlas_API.Entities
 
         [BsonElement("ExitCriteria")]
         public string ExitCriteria { get; set; }
+
+        public override string ToString()
+        {
+            return $"{GroupId}, {GroupTitle}, {Limits}, {ExitCriteria}";
+        }
     }
 }
