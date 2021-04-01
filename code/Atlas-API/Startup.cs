@@ -1,15 +1,9 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
@@ -35,18 +29,14 @@ namespace Atlas_API
         {
             services.AddCors(options =>
             {
-                options.AddDefaultPolicy(
-                    builder =>
-                    {
-                        builder.WithOrigins(new string[] { "https://localhost:3000", "http://localhost:3000" }).AllowAnyMethod().AllowAnyHeader();
-                    });
+                options.AddPolicy("AllowMyOrigin", builder => builder.WithOrigins("http://localhost:3000").AllowAnyMethod().AllowAnyHeader());
             });
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Atlas_API", Version = "v1" });
-            });
+                {
+                    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Atlas_API", Version = "v1" });
+                });
 
             SecretClientOptions options = new SecretClientOptions()
             {
@@ -79,12 +69,11 @@ namespace Atlas_API
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Atlas_API v1"));
             }
 
-            app.UseHttpsRedirection();
-
             app.UseRouting();
+            app.UseCors("AllowMyOrigin");
 
             app.UseAuthorization();
-            app.UseCors();
+            app.UseAuthentication();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
