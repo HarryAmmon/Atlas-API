@@ -8,7 +8,7 @@ namespace Atlas_API.Entities
         [BsonId]
         [BsonElement("_id")]
         [BsonRepresentation(BsonType.ObjectId)]
-        public string Id { get; set; }
+        public string ColumnId { get; set; }
 
         [BsonElement("Title")]
         [Required]
@@ -17,7 +17,7 @@ namespace Atlas_API.Entities
         [BsonElement("ColumnGroup_Id")]
         [BsonRepresentation(BsonType.ObjectId)]
         [Required]
-        public string ColumnGroupId { get; set; }
+        public string GroupId { get; set; }
 
         [BsonElement("UserStories_Id")]
         [Required]
