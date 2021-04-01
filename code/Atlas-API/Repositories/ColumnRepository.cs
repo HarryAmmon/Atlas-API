@@ -18,6 +18,11 @@ namespace Atlas_API.Repositories
 
         public async Task<Column> Create(Column obj)
         {
+            if (obj.UserStoriesId == null)
+            {
+                string[] userStories = { };
+                obj.UserStoriesId = userStories;
+            }
             await _collection.InsertOneAsync(obj);
             return await Get(obj.ColumnId);
         }
