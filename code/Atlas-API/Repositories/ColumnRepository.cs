@@ -19,7 +19,7 @@ namespace Atlas_API.Repositories
         public async Task<Column> Create(Column obj)
         {
             await _collection.InsertOneAsync(obj);
-            return await Get(obj.Id);
+            return await Get(obj.ColumnId);
         }
 
         public Task Delete(string id)
@@ -29,7 +29,7 @@ namespace Atlas_API.Repositories
 
         public async Task<Column> Get(string id)
         {
-            var result = await _collection.FindAsync(x => x.Id == id);
+            var result = await _collection.FindAsync(x => x.ColumnId == id);
             return await result.FirstOrDefaultAsync();
         }
 
