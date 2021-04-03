@@ -54,7 +54,8 @@ namespace Atlas_API
             services.AddScoped<IMongoDBContext, MongoDBContext>();
             services.AddScoped<IBaseRepository<UserStory>, UserStoryRepository>();
             services.AddScoped<IBaseRepository<ColumnGroup>, ColumnGroupRepository>();
-            services.AddScoped<IBaseRepository<Column>, ColumnRepository>();
+            services.AddScoped<IBaseRepository<KanBanColumn>, KanBanColumnRepository>();
+            services.AddScoped<IBaseRepository<DefaultColumn>, DefaultColumnRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
