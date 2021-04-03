@@ -11,24 +11,41 @@ namespace Atlas_API.Controllers
     [Route("[controller]")]
     public class ColumnGroupController : ControllerBase
     {
-        private readonly IBaseRepository<ColumnGroup> _repo;
+        private readonly IBaseRepository<ColumnGroup> _columnGroupRepo;
+        private readonly IBaseRepository<Column> _columnRepo;
 
-        public ColumnGroupController(IBaseRepository<ColumnGroup> repo)
+        public ColumnGroupController(IBaseRepository<ColumnGroup> columnGroupRepo, IBaseRepository<Column> columnRepo)
         {
-            _repo = repo;
+            _columnGroupRepo = columnGroupRepo;
+            _columnRepo = columnRepo;
         }
 
         [HttpGet]
         public async Task<IEnumerable<ColumnGroup>> Get()
         {
-            return await _repo.Get();
+            return await _columnGroupRepo.Get();
         }
 
         [HttpPost]
         public async Task<ActionResult> Post(ColumnGroup group)
         {
-            var result = await _repo.Create(group);
-            return CreatedAtAction("Post", result);
+            var groupResult = await _columnGroupRepo.Create(group);
+
+            var column1 = new Column()
+            {
+                Title = "Done",
+                GroupId = groupResult.GroupId,
+            };
+            var column2 = new Column()
+            {
+                Title = "Doing",
+                GroupId = groupResult.GroupId,
+            };
+
+            var column1Result = _columnRepo.Create(column1);
+            var column2Result = _columnRepo.Create(column2);
+
+            return CreatedAtAction("Post", new object[] { groupResult, await column1Result, await column2Result });
         }
     }
 }
