@@ -12,7 +12,6 @@ namespace Atlas_API.Entities
         public string Id { get; set; }
 
         [BsonElement("StoryId")]
-        [Required]
         public string UserStoryId { get; set; }
 
         [BsonElement("Title")]

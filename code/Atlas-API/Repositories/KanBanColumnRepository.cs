@@ -20,8 +20,7 @@ namespace Atlas_API.Repositories
         {
             if (obj.UserStoriesId == null)
             {
-                string[] userStories = { };
-                obj.UserStoriesId = userStories;
+                obj.UserStoriesId = new List<string>();
             }
             await _collection.InsertOneAsync(obj);
             return await Get(obj.ColumnId);

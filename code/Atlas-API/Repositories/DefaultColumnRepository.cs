@@ -40,9 +40,9 @@ namespace Atlas_API.Repositories
             return await allDefaultColumns.ToListAsync();
         }
 
-        public Task Update(string id, DefaultColumn obj)
+        public async Task Update(string id, DefaultColumn obj)
         {
-            throw new System.NotImplementedException();
+            var result = await _collection.ReplaceOneAsync(column => column.ColumnId == id, obj);
         }
     }
 }

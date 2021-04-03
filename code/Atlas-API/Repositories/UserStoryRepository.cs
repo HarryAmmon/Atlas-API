@@ -50,17 +50,7 @@ namespace Atlas_API.Repositories
 
         public async Task Update(string id, UserStory obj)
         {
-            Console.WriteLine(obj.ToString());
             var result = await _collection.ReplaceOneAsync(story => story.Id == id, obj);
-            if (result.ModifiedCount == 0)
-            {
-                Console.WriteLine("Throwing error");
-                throw new NullReferenceException("No documents updated");
-            }
-            else
-            {
-                Console.WriteLine("Updated");
-            }
         }
     }
 }

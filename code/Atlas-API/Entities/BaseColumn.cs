@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson;
+using System.Collections.Generic;
 
 namespace Atlas_API.Entities
 {
@@ -16,13 +17,12 @@ namespace Atlas_API.Entities
         public string Title { get; set; }
 
         [BsonElement("Visible")]
-        [Required]
-        [BsonDefaultValue(false)]
+        [BsonDefaultValue(true)]
         public bool Visible { get; set; }
 
         [BsonElement("UserStories_Id")]
         [Required]
         [BsonRepresentation(BsonType.ObjectId)]
-        public string[] UserStoriesId { get; set; }
+        public List<string> UserStoriesId { get; set; }
     }
 }
