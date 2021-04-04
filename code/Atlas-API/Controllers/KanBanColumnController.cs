@@ -29,5 +29,19 @@ namespace Atlas_API.Controllers
             var result = await _repo.Create(column);
             return CreatedAtAction("Post", result);
         }
+
+        [HttpPut("{id:length(24)}")]
+        public async Task<ActionResult> Put(string cardId, CardMovement source, CardMovement destination)
+        {
+            if (source.ColumnId == destination.ColumnId)
+            {
+                // THE CARD IS IN A DIFFERENT POSTION IN THE SAME COLUMN
+                var columnToUpdate
+            }
+            else
+            {
+                // THE CARD IS IN A DIFFERENT COLUMN
+            }
+        }
     }
 }
