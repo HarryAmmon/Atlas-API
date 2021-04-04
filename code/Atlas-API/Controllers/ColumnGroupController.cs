@@ -12,9 +12,9 @@ namespace Atlas_API.Controllers
     public class ColumnGroupController : ControllerBase
     {
         private readonly IBaseRepository<ColumnGroup> _columnGroupRepo;
-        private readonly IBaseRepository<Column> _columnRepo;
+        private readonly IBaseRepository<KanBanColumn> _columnRepo;
 
-        public ColumnGroupController(IBaseRepository<ColumnGroup> columnGroupRepo, IBaseRepository<Column> columnRepo)
+        public ColumnGroupController(IBaseRepository<ColumnGroup> columnGroupRepo, IBaseRepository<KanBanColumn> columnRepo)
         {
             _columnGroupRepo = columnGroupRepo;
             _columnRepo = columnRepo;
@@ -31,15 +31,17 @@ namespace Atlas_API.Controllers
         {
             var groupResult = await _columnGroupRepo.Create(group);
 
-            var column1 = new Column()
+            var column1 = new KanBanColumn()
             {
                 Title = "Done",
                 GroupId = groupResult.GroupId,
+                KanBanColumn = true,
             };
-            var column2 = new Column()
+            var column2 = new KanBanColumn()
             {
                 Title = "Doing",
                 GroupId = groupResult.GroupId,
+                KanBanColumn = true,
             };
 
             var column1Result = _columnRepo.Create(column1);

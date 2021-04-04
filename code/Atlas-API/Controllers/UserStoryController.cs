@@ -14,12 +14,12 @@ namespace Atlas_API.Controllers
     [Route("[controller]")]
     public class UserStoryController : ControllerBase
     {
-
         private readonly IBaseRepository<UserStory> _repo;
-
-        public UserStoryController(IBaseRepository<UserStory> repo)
+        private readonly IBaseRepository<KanBanColumn> _kanBanColumnRepo;
+        public UserStoryController(IBaseRepository<UserStory> repo, IBaseRepository<KanBanColumn> kanBanColumnRepo)
         {
             _repo = repo;
+            _kanBanColumnRepo = kanBanColumnRepo;
         }
 
         [HttpGet]
@@ -31,7 +31,18 @@ namespace Atlas_API.Controllers
         [HttpPost]
         public async Task<ActionResult> Post(UserStory userStory)
         {
+            // Create user story
             var result = await _repo.Create(userStory);
+            // Get list of all default columns
+            var defaultColumns = await _kanBanColumnRepo.Get();
+            foreach (var column in defaultColumns)
+            {
+                if (column.Title == "Backlog")
+                {
+                    column.UserStoriesId.Add(result.Id);
+                    await _kanBanColumnRepo.Update(column.ColumnId, column);
+                }
+            }
             return CreatedAtAction("Post", result);
         }
 
@@ -76,9 +87,36 @@ namespace Atlas_API.Controllers
             else
             {
                 await _repo.Delete(id);
+                var allDefaultColumns = await _kanBanColumnRepo.Get();
+                foreach (var column in allDefaultColumns)
+                {
+                    foreach (var userStoryId in column.UserStoriesId)
+                    {
+                        if (userStoryId == story.Id)
+                        {
+                            column.UserStoriesId.Remove(story.Id);
+                            await _kanBanColumnRepo.Update(column.ColumnId, column);
+                            await AddToArchive(story.Id);
+                            break;
+                        }
+                    }
+                }
                 return StatusCode(202);
             }
 
+        }
+
+        private async Task AddToArchive(string id)
+        {
+            var allDefaultColumns = await _kanBanColumnRepo.Get();
+            foreach (var column in allDefaultColumns)
+            {
+                if (column.Title == "Archived")
+                {
+                    column.UserStoriesId.Add(id);
+                    await _kanBanColumnRepo.Update(column.ColumnId, column);
+                }
+            }
         }
     }
 }

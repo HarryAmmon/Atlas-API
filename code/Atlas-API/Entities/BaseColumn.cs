@@ -1,9 +1,11 @@
 using System.ComponentModel.DataAnnotations;
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson;
+using System.Collections.Generic;
+
 namespace Atlas_API.Entities
 {
-    public class Column
+    public class BaseColumn
     {
         [BsonId]
         [BsonElement("_id")]
@@ -14,14 +16,13 @@ namespace Atlas_API.Entities
         [Required]
         public string Title { get; set; }
 
-        [BsonElement("ColumnGroup_Id")]
-        [BsonRepresentation(BsonType.ObjectId)]
-        [Required]
-        public string GroupId { get; set; }
-
         [BsonElement("UserStories_Id")]
         [Required]
         [BsonRepresentation(BsonType.ObjectId)]
-        public string[] UserStoriesId { get; set; }
+        public List<string> UserStoriesId { get; set; }
+
+        [BsonElement("KanBanColumn")]
+        [Required]
+        public bool KanBanColumn { get; set; }
     }
 }

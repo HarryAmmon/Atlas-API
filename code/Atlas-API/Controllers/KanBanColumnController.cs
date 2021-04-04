@@ -8,23 +8,23 @@ namespace Atlas_API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class ColumnController : ControllerBase
+    public class KanBanColumnController : ControllerBase
     {
-        private readonly IBaseRepository<Column> _repo;
+        private readonly IBaseRepository<KanBanColumn> _repo;
 
-        public ColumnController(IBaseRepository<Column> repo)
+        public KanBanColumnController(IBaseRepository<KanBanColumn> repo)
         {
             _repo = repo;
         }
 
         [HttpGet]
-        public async Task<IEnumerable<Column>> Get()
+        public async Task<IEnumerable<KanBanColumn>> Get()
         {
             return await _repo.Get();
         }
 
         [HttpPost]
-        public async Task<ActionResult> Post(Column column)
+        public async Task<ActionResult> Post(KanBanColumn column)
         {
             var result = await _repo.Create(column);
             return CreatedAtAction("Post", result);
