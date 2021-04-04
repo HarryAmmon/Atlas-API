@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Atlas_API.Entities;
@@ -31,17 +32,35 @@ namespace Atlas_API.Controllers
         }
 
         [HttpPut("{id:length(24)}")]
-        public async Task<ActionResult> Put(string cardId, CardMovement source, CardMovement destination)
+        public async Task<ActionResult> Put([FromRoute] string destinationId, [FromBody] KanBanColumnPutRequest body)
         {
-            if (source.ColumnId == destination.ColumnId)
+            var sourceColumn = await _repo.Get(body.Source.DroppableId);
+            if (sourceColumn == null)
             {
-                // THE CARD IS IN A DIFFERENT POSTION IN THE SAME COLUMN
-                var columnToUpdate
+                return NotFound();
+            }
+            var cardId = sourceColumn.UserStoriesId[body.Source.Index];
+            sourceColumn.UserStoriesId.Remove(cardId);
+
+            if (body.Source.DroppableId == body.Destination.DroppableId)
+            {
+                sourceColumn.UserStoriesId.Insert(body.Destination.Index, cardId);
+                await _repo.Update(sourceColumn.ColumnId, sourceColumn);
             }
             else
             {
-                // THE CARD IS IN A DIFFERENT COLUMN
+                var destinationColumn = await _repo.Get(body.Destination.DroppableId);
+                if (destinationColumn == null)
+                {
+                    return NotFound();
+                }
+                destinationColumn.UserStoriesId.Insert(body.Destination.Index, cardId);
+                var updateSourceColumn = _repo.Update(sourceColumn.ColumnId, sourceColumn);
+                var updateDestinationColumn = _repo.Update(destinationColumn.ColumnId, destinationColumn);
+
+                Task.WaitAll(updateSourceColumn, updateDestinationColumn);
             }
+            return NoContent();
         }
     }
 }
