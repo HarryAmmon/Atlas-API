@@ -31,6 +31,10 @@ namespace Atlas_API.Entities
         [BsonElement("Archived")]
         public bool Archived { get; set; }
 
+        [BsonElement("Position")]
+        [Required]
+        public int Position { get; set; }
+
         public UserStory(string id, string title, double storyPoints = 0, string description = "", string acceptanceCriteria = "")
         {
             UserStoryId = id;
