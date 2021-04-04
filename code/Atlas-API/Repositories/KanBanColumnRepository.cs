@@ -43,9 +43,9 @@ namespace Atlas_API.Repositories
             return await result.ToListAsync();
         }
 
-        public Task Update(string id, KanBanColumn obj)
+        public async Task Update(string id, KanBanColumn obj)
         {
-            throw new System.NotImplementedException();
+            var result = await _collection.ReplaceOneAsync(x => x.ColumnId == id, obj);
         }
     }
 }

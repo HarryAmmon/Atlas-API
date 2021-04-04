@@ -16,13 +16,13 @@ namespace Atlas_API.Entities
         [Required]
         public string Title { get; set; }
 
-        [BsonElement("Visible")]
-        [BsonDefaultValue(true)]
-        public bool Visible { get; set; }
-
         [BsonElement("UserStories_Id")]
         [Required]
         [BsonRepresentation(BsonType.ObjectId)]
         public List<string> UserStoriesId { get; set; }
+
+        [BsonElement("KanBanColumn")]
+        [Required]
+        public bool KanBanColumn { get; set; }
     }
 }
