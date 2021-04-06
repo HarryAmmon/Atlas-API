@@ -26,9 +26,13 @@ namespace Atlas_API.Repositories
             return await Get(obj.ColumnId);
         }
 
-        public Task Delete(string id)
+        public async Task Delete(string id)
         {
-            throw new System.NotImplementedException();
+            var result = await _collection.DeleteOneAsync(x => x.ColumnId == id);
+            if (result.DeletedCount == 0)
+            {
+                throw new MongoException("Failed to delete");
+            }
         }
 
         public async Task<KanBanColumn> Get(string id)
