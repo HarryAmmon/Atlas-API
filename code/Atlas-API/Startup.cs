@@ -29,7 +29,7 @@ namespace Atlas_API
         {
             services.AddCors(options =>
             {
-                options.AddPolicy("AllowMyOrigin", builder => builder.WithOrigins("http://localhost:3000", "https://red-rock-0949f4403.azurestaticapps.net").AllowAnyMethod().AllowAnyHeader());
+                options.AddPolicy("AllowMyOrigin", builder => builder.WithOrigins("http://localhost:3000", "https://www.atlax.tech").AllowAnyMethod().AllowAnyHeader());
             });
 
             services.AddControllers();
