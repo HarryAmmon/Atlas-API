@@ -49,5 +49,50 @@ namespace Atlas_API.Controllers
 
             return CreatedAtAction("Post", new object[] { groupResult, await column1Result, await column2Result });
         }
+
+        [HttpDelete("{id:length(24)}")]
+        public async Task<ActionResult> Delete(string id)
+        {
+            // find column group
+            var columnGroup = await _columnGroupRepo.Get(id);
+            var columns = await _columnRepo.Get();
+            if (columnGroup == null)
+            {
+                Console.WriteLine("Could not find group");
+                return NotFound();
+            }
+            // find all associated columns
+            if (columns == null)
+            {
+                Console.WriteLine("Could not find columns");
+                return NotFound();
+            }
+            foreach (var column in columns)
+            {
+                if (column.GroupId == id)
+                {
+                    await _columnRepo.Delete(column.ColumnId);
+                }
+            }
+
+            await _columnGroupRepo.Delete(columnGroup.GroupId);
+            return StatusCode(202);
+        }
+
+        [HttpPut("{id:length(24)}")]
+        public async Task<ActionResult> Put(string id, ColumnGroup column)
+        {
+            Console.WriteLine("Made it inside the put function");
+            Console.WriteLine(column);
+            var columnFromRepo = await _columnGroupRepo.Get(id);
+            if (columnFromRepo == null)
+            {
+                return NotFound();
+            }
+
+            await _columnGroupRepo.Update(id, column);
+
+            return NoContent();
+        }
     }
 }

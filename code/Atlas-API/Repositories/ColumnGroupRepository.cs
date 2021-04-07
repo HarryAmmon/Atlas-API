@@ -22,9 +22,13 @@ namespace Atlas_API.Repositories
             return await Get(obj.GroupId);
         }
 
-        public Task Delete(string id)
+        public async Task Delete(string id)
         {
-            throw new System.NotImplementedException();
+            var result = await _collection.DeleteOneAsync(x => x.GroupId == id);
+            if (result.DeletedCount == 0)
+            {
+                throw new MongoException("Failed to delete");
+            }
         }
 
         public async Task<ColumnGroup> Get(string id)
@@ -39,9 +43,9 @@ namespace Atlas_API.Repositories
             return allColumnGroups.ToList();
         }
 
-        public Task Update(string id, ColumnGroup obj)
+        public async Task Update(string id, ColumnGroup obj)
         {
-            throw new System.NotImplementedException();
+            var result = await _collection.ReplaceOneAsync(column => column.GroupId == id, obj);
         }
     }
 }
