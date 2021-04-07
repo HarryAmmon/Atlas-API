@@ -43,9 +43,9 @@ namespace Atlas_API.Repositories
             return allColumnGroups.ToList();
         }
 
-        public Task Update(string id, ColumnGroup obj)
+        public async Task Update(string id, ColumnGroup obj)
         {
-            throw new System.NotImplementedException();
+            var result = await _collection.ReplaceOneAsync(column => column.GroupId == id, obj);
         }
     }
 }

@@ -78,5 +78,21 @@ namespace Atlas_API.Controllers
             await _columnGroupRepo.Delete(columnGroup.GroupId);
             return StatusCode(202);
         }
+
+        [HttpPut("{id:length(24)}")]
+        public async Task<ActionResult> Put(string id, ColumnGroup column)
+        {
+            Console.WriteLine("Made it inside the put function");
+            Console.WriteLine(column);
+            var columnFromRepo = await _columnGroupRepo.Get(id);
+            if (columnFromRepo == null)
+            {
+                return NotFound();
+            }
+
+            await _columnGroupRepo.Update(id, column);
+
+            return NoContent();
+        }
     }
 }
