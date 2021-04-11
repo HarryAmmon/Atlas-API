@@ -4,7 +4,7 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace Atlas_API.Entities
 {
-    public class Task
+    public class AtlasTask
     {
         [BsonElement("_id")]
         [BsonRepresentation(BsonType.ObjectId)]
