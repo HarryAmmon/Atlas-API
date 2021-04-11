@@ -16,14 +16,19 @@ namespace Atlas_API.Repositories
             _context = context;
             _collection = _context.GetCollection<AtlasTask>("Tasks");
         }
-        public Task<AtlasTask> Create(AtlasTask obj)
+        public async Task<AtlasTask> Create(AtlasTask obj)
         {
-            throw new System.NotImplementedException();
+            await _collection.InsertOneAsync(obj);
+            return await Get(obj.Id);
         }
 
-        public Task Delete(string id)
+        public async Task Delete(string id)
         {
-            throw new System.NotImplementedException();
+            var result = await _collection.DeleteOneAsync(x => x.Id == id);
+            if (result.DeletedCount == 0)
+            {
+                throw new MongoException("Failed to delete");
+            }
         }
 
         public async Task<AtlasTask> Get(string id)
@@ -40,9 +45,9 @@ namespace Atlas_API.Repositories
         }
 
 
-        public Task Update(string id, AtlasTask obj)
+        public async Task Update(string id, AtlasTask obj)
         {
-            throw new System.NotImplementedException();
+            await _collection.ReplaceOneAsync(x => x.Id == id, obj);
         }
     }
 }
