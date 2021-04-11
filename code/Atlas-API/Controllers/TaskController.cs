@@ -12,23 +12,25 @@ namespace Atlas_API.Controllers
     [Route("[controller]")]
     public class TaskController : ControllerBase
     {
-        private readonly IBaseRepository<AtlasTask> _repo;
-        public TaskController(IBaseRepository<AtlasTask> repo)
+        private readonly IBaseRepository<AtlasTask> _taskRepo;
+        private readonly IBaseRepository<UserStory> _storyRepo;
+        public TaskController(IBaseRepository<AtlasTask> taskRepo, IBaseRepository<UserStory> storyRepo)
         {
-            _repo = repo;
+            _taskRepo = taskRepo;
+            _storyRepo = storyRepo;
         }
 
         [HttpGet]
         public async Task<IEnumerable<AtlasTask>> Get()
         {
-            return await _repo.Get();
+            return await _taskRepo.Get();
         }
 
         [HttpGet]
         [Route("{id}")]
         public async Task<ActionResult<AtlasTask>> Get([FromRoute] string id)
         {
-            var task = await _repo.Get(id);
+            var task = await _taskRepo.Get(id);
             if (task == null)
             {
                 return NotFound();
@@ -40,9 +42,22 @@ namespace Atlas_API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<AtlasTask>> Post(AtlasTask task)
+        [Route("{id}")]
+        public async Task<ActionResult<AtlasTask>> Post(string id, [FromBody] AtlasTask task)
         {
-            var result = await _repo.Create(task);
+            var userStory = await _storyRepo.Get(id);
+            if (userStory == null)
+            {
+                return NotFound();
+            }
+            if (userStory.TasksId == null)
+            {
+                userStory.TasksId = new List<string>();
+            }
+            var result = await _taskRepo.Create(task);
+            userStory.TasksId.Add(result.Id);
+            await _storyRepo.Update(id, userStory);
+
             return CreatedAtAction("Post", result);
         }
 
@@ -50,14 +65,14 @@ namespace Atlas_API.Controllers
         [Route("{id}")]
         public async Task<ActionResult> Delete(string id)
         {
-            var result = await _repo.Get(id);
+            var result = await _taskRepo.Get(id);
             if (result == null)
             {
                 return NotFound();
             }
             try
             {
-                await _repo.Delete(id);
+                await _taskRepo.Delete(id);
                 return StatusCode(202);
             }
             catch (MongoException)
@@ -69,7 +84,7 @@ namespace Atlas_API.Controllers
         [HttpPut("{id:length(24)}")]
         public async Task<ActionResult> Put(string id, AtlasTask task)
         {
-            if (await _repo.Get(id) == null)
+            if (await _taskRepo.Get(id) == null)
             {
                 return NotFound();
             }
@@ -77,7 +92,7 @@ namespace Atlas_API.Controllers
             {
                 if (await TryUpdateModelAsync(task))
                 {
-                    await _repo.Update(id, task);
+                    await _taskRepo.Update(id, task);
                     return NoContent();
                 }
                 else
