@@ -42,9 +42,22 @@ namespace Atlas_API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<AtlasTask>> Post(AtlasTask task)
+        [Route("{id}")]
+        public async Task<ActionResult<AtlasTask>> Post(string id, [FromBody] AtlasTask task)
         {
+            var userStory = await _storyRepo.Get(id);
+            if (userStory == null)
+            {
+                return NotFound();
+            }
+            if (userStory.TasksId == null)
+            {
+                userStory.TasksId = new List<string>();
+            }
             var result = await _taskRepo.Create(task);
+            userStory.TasksId.Add(result.Id);
+            await _storyRepo.Update(id, userStory);
+
             return CreatedAtAction("Post", result);
         }
 
