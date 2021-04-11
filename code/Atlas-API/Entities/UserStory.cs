@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
@@ -30,6 +31,12 @@ namespace Atlas_API.Entities
 
         [BsonElement("Archived")]
         public bool Archived { get; set; }
+
+        [BsonElement("Tasks_Id")]
+        [Required]
+        [BsonRepresentation(BsonType.ObjectId)]
+        public List<string> TasksId { get; set; }
+
 
         public UserStory(string id, string title, double storyPoints = 0, string description = "", string acceptanceCriteria = "")
         {

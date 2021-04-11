@@ -55,6 +55,7 @@ namespace Atlas_API
             services.AddScoped<IBaseRepository<UserStory>, UserStoryRepository>();
             services.AddScoped<IBaseRepository<ColumnGroup>, ColumnGroupRepository>();
             services.AddScoped<IBaseRepository<KanBanColumn>, KanBanColumnRepository>();
+            services.AddScoped<IBaseRepository<AtlasTask>, TaskRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
