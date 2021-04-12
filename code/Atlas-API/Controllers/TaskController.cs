@@ -73,6 +73,15 @@ namespace Atlas_API.Controllers
             try
             {
                 await _taskRepo.Delete(id);
+                var stories = await _storyRepo.Get();
+                foreach (var story in stories)
+                {
+                    if (story.TasksId.Contains(id))
+                    {
+                        story.TasksId.Remove(id);
+                        await _storyRepo.Update(story.Id, story);
+                    }
+                }
                 return StatusCode(202);
             }
             catch (MongoException)
