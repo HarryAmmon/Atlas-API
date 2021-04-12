@@ -24,6 +24,22 @@ namespace Atlas_API.Controllers
             return await _repo.Get();
         }
 
+        [HttpGet]
+        [Route("{id:length(24)}")]
+        public async Task<ActionResult<KanBanColumn>> Get(string id)
+        {
+            var column = await _repo.Get(id);
+            if (column == null)
+            {
+                Console.Write("column could not be found");
+                return NotFound();
+            }
+            else
+            {
+                return column;
+            }
+        }
+
         [HttpPost]
         public async Task<ActionResult> Post(KanBanColumn column)
         {
