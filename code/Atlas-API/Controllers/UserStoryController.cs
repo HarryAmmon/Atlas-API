@@ -27,6 +27,20 @@ namespace Atlas_API.Controllers
         {
             return await _repo.Get();
         }
+        [HttpGet]
+        [Route("{id:length(24)}")]
+        public async Task<ActionResult<UserStory>> Get(string id)
+        {
+            var story = await _repo.Get(id);
+            if (story == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return story;
+            }
+        }
 
         [HttpPost]
         public async Task<ActionResult> Post(UserStory userStory)
