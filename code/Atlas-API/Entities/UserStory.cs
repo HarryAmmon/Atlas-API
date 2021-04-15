@@ -37,6 +37,10 @@ namespace Atlas_API.Entities
         [BsonRepresentation(BsonType.ObjectId)]
         public List<string> TasksId { get; set; }
 
+        [BsonElement("Bugs_Id")]
+        [Required]
+        [BsonRepresentation(BsonType.ObjectId)]
+        public List<string> BugsId { get; set; }
 
         public UserStory(string id, string title, double storyPoints = 0, string description = "", string acceptanceCriteria = "")
         {
