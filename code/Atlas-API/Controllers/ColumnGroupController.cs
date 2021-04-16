@@ -33,13 +33,13 @@ namespace Atlas_API.Controllers
 
             var column1 = new KanBanColumn()
             {
-                Title = "Done",
+                Title = "Doing",
                 GroupId = groupResult.GroupId,
                 KanBanColumn = true,
             };
             var column2 = new KanBanColumn()
             {
-                Title = "Doing",
+                Title = "Done",
                 GroupId = groupResult.GroupId,
                 KanBanColumn = true,
             };
